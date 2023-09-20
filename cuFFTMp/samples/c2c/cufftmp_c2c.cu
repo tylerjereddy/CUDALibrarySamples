@@ -44,10 +44,17 @@ void run_c2c_fwd_inv(size_t nx, size_t ny, size_t nz, std::complex<float>* cpu_d
 
     cufftHandle plan = 0;
     cudaStream_t stream = nullptr;
+    int device = 0;
 
     CUDA_CHECK(cudaStreamCreate(&stream));
 
+    printf("(Tyler debug print) Before cudaGetDevice()\n");
+    CUFFT_CHECK(cudaGetDevice(&device));
+    printf("(Tyler debug print) After cudaGetDevice()\n");
+    printf("(Tyler debug print) value of device after cudaGetDevice() is %i on rank %i\n", device, rank);
+    printf("(Tyler debug print) Before cufftCreate()\n");
     CUFFT_CHECK(cufftCreate(&plan));
+    printf("(Tyler debug print) After cufftCreate()\n");
 
     CUFFT_CHECK(cufftMpAttachComm(plan, CUFFT_COMM_MPI, &comm));
 
