@@ -104,7 +104,9 @@ int main(int argc, char** argv) {
     MPI_Comm_size(MPI_COMM_WORLD, &size);
 
     int ndevices;
+    printf("(Tyler debug print) Before cudaGetDeviceCount in main()\n");
     CUDA_CHECK(cudaGetDeviceCount(&ndevices));
+    printf("(Tyler debug print) After cudaGetDeviceCount in main() with ndevices: %i\n", ndevices);
     CUDA_CHECK(cudaSetDevice(rank % ndevices));
 
     size_t nx = (argc >= 2 ? atoi(argv[1]) : 8*size);  // any value >= size is OK
